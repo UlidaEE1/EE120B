@@ -22,7 +22,7 @@ int main(void) {
     /* Insert your solution below */
     while (1) {
 	tempA = PINA;
-	
+
 	if( tempA ==  0x00)
 		{
 			tempB = 0x00;
@@ -39,7 +39,7 @@ int main(void) {
                 {
                         tempB = 0x00;
                 }
-
+	PORTB = tempB;
 
 
 

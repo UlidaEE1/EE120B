@@ -28,12 +28,13 @@ int main(void) {
 		{
 		tempB  = tempA & 0x01;
 			if( tempB == 0x00) 
-				{ cnt = cnt + 0x01;}
-		tempA = tempA >> 0x01;
+				{ cnt =( cnt + 0x01);}
+		tempA =( tempA >> 0x01);
 		
 		
 			 }	
 		PORTC = cnt;
+		cnt = 0;
     }
     return 0;
 }

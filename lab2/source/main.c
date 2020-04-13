@@ -1,3 +1,4 @@
+
 /*	Author: ulaza001
  *  Partner(s) Name: 
  *	Lab Section:
@@ -20,12 +21,19 @@ int main(void) {
 	unsigned char tempB = 0x00; 
 	unsigned char cnt = 0x00;  // variable for bit manipulation 
 	unsigned char i = 0x00;
+	unsigned char x = 0x00;
     /* Insert your solution below */
     while (1) {
 	tempA = PINA & 0x0F;
+	x = tempA;
 
+	if (tempA == 0x0F)
+		{PORTC = 0x80;}
+	else{
 	for ( i = 0x00 ; i < 0x04; i= i + 0x01)
 		{
+	 
+
 		tempB  = tempA & 0x01;
 			if( tempB == 0x00) 
 				{ cnt =( cnt + 0x01);}
@@ -35,6 +43,7 @@ int main(void) {
 			 }	
 		PORTC = cnt;
 		cnt = 0;
-    }
+    }}
+	
     return 0;
 }

@@ -15,34 +15,35 @@
 
 int main(void) {
     /* Insert DDR and PORT initializations */
-    	DDRA = 0x00; PORTA = 0xFF ; // INPUT
-	DDRB = 0x00; PORTB = 0xFF;
-	DDRC = 0x00 ; PORTC = 0xFF; //INPUT
-	DDRD = 0xFF; PORTD = 0x00;
-	unsigned char wA = 0x00; // temporaery
-	unsigned char wB = 0x00; 
-	unsigned char wC = 0x00;  // variable for bit manipulation 
+    	 DDRA = 0x00; PORTA = 0xFF ; // INPUT
+	DDRC = 0xFF ; PORTC = 0x00; // OUTPUT
+	unsigned char tempA = 0x00; // temporaery
+	unsigned char tempB = 0x00; 
+	unsigned char cnt = 0x00;  // variable for bit manipulation 
 	unsigned char i = 0x00;
 	unsigned char x = 0x00;
     /* Insert your solution below */
     while (1) {
-	wA = PINA ;
-	wB = PINB ;
-	wC = PINC ;
-	i = wA + wB + wC ;
-	
-	if(( wA  + wB + wC) >= 0x8C)
-		{ x = 0x01;}
-	else { x = 0x00;}
-	
-	if(( (wA - wC > 80) ||(wC - wA > 80)) )
-		{ x = x| 0x02;  }
+	tempA = PINA & 0x0F;
+	x = tempA;
 
-	PORTD = (i & 0xFC)| x;
+	if (tempA == 0x0F)
+		{PORTC = 0x80;}
+	else{
+	for ( i = 0x00 ; i < 0x04; i= i + 0x01)
+		{
+	 
 
-	
+		tempB  = tempA & 0x01;
+			if( tempB == 0x00) 
+				{ cnt =( cnt + 0x01);}
+		tempA =( tempA >> 0x01);
 		
-    }
+		
+			 }	
+		PORTC = cnt;
+		cnt = 0;
+    }}
 	
     return 0;
 }

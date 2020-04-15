@@ -28,11 +28,12 @@ unsigned char tempB = 0x00;
         tempA = PIND; 
 	tempB = PINB & 0x01;
 	
-	if( tempA >= 23 && tempB == 0x00)
+	if(( tempA >= 23 && tempB == 0x00) || ( tempA >= 23 && tempB == 0x01))
 		{ PORTB =  0x02;  	}
 	if(( tempA >= 0x02 && tempB == 0x01) && ( (tempA <= 23 ))) 
-		{ PORTB = 0x03;}
-
+		{ PORTB = 0x04;}
+	if( tempA <= 5)
+		{ PORTB = 0x00;}
 	//PORTC = (PINA & 0x0F) <<4;
 	//PORTB = tempB;
 	tempA = 0;

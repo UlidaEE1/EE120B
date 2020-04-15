@@ -28,19 +28,19 @@ echo Running all tests..."\n\n
 
 # Example test:
 test "PIND: 0x023, PORTB: 0x00  => PORTB: 0x01"
-setPIND 0x23
-setPINB 0x00
+setPIND 0xFF
+setPINB 0x01
 continue  1
-expectPORTB 0x01
+expectPORTB 0x02
 # Check pass/fail
 checkResult
 
 
 test "PIND: 0x03, PORTB: 0x01  => PORTB: 0x02"
-setPIND 0x03
-setPINB 0x01
+setPIND 0x02
+setPINB 0x00
 continue  1
-expectPORTB 0x03
+expectPORTB 0x00
 # Check pass/fail
 checkResult
 

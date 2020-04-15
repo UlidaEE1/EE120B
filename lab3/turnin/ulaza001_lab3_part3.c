@@ -35,7 +35,7 @@ unsigned char tempC = 0x00;
         else if( tempA >= 5 &&  tempA <= 6 )
                 { tempB = 0x38;}
 	else if( tempA >= 7 &&  tempA <= 9 )
-                { tempB = 0x3A ;}
+                { tempB = 0x3C;}
 	else if( tempA >= 10&&  tempA <= 12)
                 { tempB = 0x3E;}
 	else if( tempA >= 13 &&  tempA <= 15 )

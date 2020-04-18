@@ -31,7 +31,7 @@ else if(A0)
 {L_state = s1;}
 break;
 
-case s1;
+case s1:
 if(A0)
 { L_state = s1;}
 else if(!A0)
@@ -93,9 +93,10 @@ int main(void) {
 DDRA = 0x00;  PORTA = 0xFF;
 DDRB = 0xFF;  PORTB = 0x00;
 L_state = Start;
+unsigned char A0 = PINA;
     /* Insert your solution below */
     while (1) {
-
+Tick();
     }
     return 1;
 }

@@ -26,6 +26,8 @@
 echo ======================================================\n
 echo Running all tests..."\n\n
 
+
+
 # Example test:
 test "PINA: 0x00=> PORTB: 0x01"
 set L_state = s0
@@ -33,10 +35,15 @@ setPINA 0x00
 continue 2
 setPINA 0x01
 continue 2
-expectPORTB 0x02
+setPINA 0x00
+continue 2
+setPINA 0x01
+continue 2
+expectPORTB 0x01
 checkResult
 
 test "PINA: 0x01 => PORTC: 0x02"
+set L_state = s0
 setPINA 0x01
 continue 2
 expectPORTB 0x02

@@ -13,72 +13,85 @@
 #endif
 
 
-enum States{ Start, s0, s1, s2, s3} L_state;
+enum States{ Start, s0, s1, s2, s3} state;
 
 void Tick()
 {
-unsigned char A0;
-
-A0 = PINA & 0x01;
-
-switch(L_state)
+unsigned char A;
+unsigned char cnt;
+A = PINA & 0x03;
+cnt = 0;
+switch(state)
 {
 case Start:
-L_state = s0;
+state = s0;
 break;
 
 case s0:
-if(!A0)
-{ L_state = s0;}
-else if(A0)
-{L_state = s1;}
+if(A == 0x01)
+{ state = s1;}
+else if(A == 0x02 )
+{state = s2;}
+else if(A == 0x00)
+{ state = s3;}
 break;
 
 case s1:
-if(A0)
-{ L_state = s1;}
-else if(!A0)
-{L_state = s2;}
+if(A == 0x01)
+{ state = s1;}
+else if(A == 0x02)
+{state = s2;}
+else if (A == 0x00)
+{ state = s3;}
 break;
 
 case s2:
-if(!A0)
-{ L_state = s2;}
-else if(A0)
-{L_state = s3;}
+if(A == 0x01)
+{ state = s1;}
+else if(A == 0x02)
+{state = s2;}
+else if( A == 0x00)
+{ state = s3;}
 break;
 
 case s3:
-if(A0)
-{ L_state = s3;}
-else if(!A0)
-{L_state = s1;}
+if(A == 0x01)
+{ state = s1;}
+else if(A == 0x02)
+{state = s2;}
+else if( A == 0x00)
+{ state = s3;}
 break;
 
 default:
-L_state = Start; 
+state = Start; 
 break;
 
 
 
 }// transitions
 
-switch(L_state) {
+switch(state) {
 
 case s0:
-PORTB = 0x01;
+cnt = 0x07;
+PORTC = cnt;
 break;
 
 case s1:
-PORTB = 0x02;
+if(cnt <= 9 && cnt >= 0) 
+{cnt = cnt + 1;
+PORTC = cnt;}
 break;
 
 case s2:
-PORTB = 0x02;
+if( cnt <= 9 && cnt >= 0)
+{ cnt = cnt - 1;
+PORTC = cnt;}
 break;
 
 case s3:
-PORTB = 0x01;
+PORTC = 0x00;
 break;
 
 default:
@@ -95,7 +108,8 @@ int main(void) {
     /* Insert DDR and PORT initializations */
 DDRA = 0x00;  PORTA = 0xFF;
 DDRB = 0xFF;  PORTB = 0x00;
-L_state = Start;
+DDRC = 0xFF;  PORTC = 0x00 ;
+state = Start;
 //unsigned char A0 = PINA;
     /* Insert your solution below */
     while (1) {

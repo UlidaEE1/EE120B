@@ -17,6 +17,9 @@ enum States{ Start, s0, s1, s2, s3} L_state;
 
 void Tick()
 {
+unsigned char A0;
+
+A0 = PINA & 0x01;
 
 switch(L_state)
 {
@@ -93,7 +96,7 @@ int main(void) {
 DDRA = 0x00;  PORTA = 0xFF;
 DDRB = 0xFF;  PORTB = 0x00;
 L_state = Start;
-unsigned char A0 = PINA;
+//unsigned char A0 = PINA;
     /* Insert your solution below */
     while (1) {
 Tick();

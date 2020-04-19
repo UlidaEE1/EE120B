@@ -20,7 +20,7 @@ void Tick()
 unsigned char A;
 unsigned char cnt;
 A = PINA & 0x03;
-cnt = 0;
+cnt = 0x07;
 switch(state)
 {
 case Start:
@@ -32,7 +32,7 @@ if(A == 0x01)
 { state = s1;}
 else if(A == 0x02 )
 {state = s2;}
-else if(A == 0x00)
+else if(A == 0x03)
 { state = s3;}
 break;
 
@@ -41,7 +41,7 @@ if(A == 0x01)
 { state = s1;}
 else if(A == 0x02)
 {state = s2;}
-else if (A == 0x00)
+else if (A == 0x03)
 { state = s3;}
 break;
 
@@ -50,7 +50,7 @@ if(A == 0x01)
 { state = s1;}
 else if(A == 0x02)
 {state = s2;}
-else if( A == 0x00)
+else if( A == 0x03)
 { state = s3;}
 break;
 
@@ -59,7 +59,7 @@ if(A == 0x01)
 { state = s1;}
 else if(A == 0x02)
 {state = s2;}
-else if( A == 0x00)
+else if( A == 0x03)
 { state = s3;}
 break;
 
@@ -74,7 +74,7 @@ break;
 switch(state) {
 
 case s0:
-cnt = 0x07;
+cnt = 7;
 PORTC = cnt;
 break;
 
@@ -85,7 +85,7 @@ PORTC = cnt;}
 break;
 
 case s2:
-if( cnt <= 9 && cnt >= 0)
+if( cnt <= 9 && cnt > 0)
 { cnt = cnt - 1;
 PORTC = cnt;}
 break;
@@ -107,7 +107,6 @@ break;
 int main(void) {
     /* Insert DDR and PORT initializations */
 DDRA = 0x00;  PORTA = 0xFF;
-DDRB = 0xFF;  PORTB = 0x00;
 DDRC = 0xFF;  PORTC = 0x00 ;
 state = Start;
 //unsigned char A0 = PINA;

@@ -122,5 +122,4 @@ PORTC = 0;
 Tick();
     }
    return 0;
-A = 0x00;  PORTA = 0xFF;
-
+}

@@ -27,12 +27,6 @@ state = s0;
 break;
 
 case s0:
-if (A == 0x80)
-{ state = s1;}
-else{ state = s0;}
-break;
-
-case s1:
 if(A == 0x04)
 { state = s2;}
 else {state = s1;}

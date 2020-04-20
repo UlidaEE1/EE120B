@@ -30,20 +30,33 @@ echo Running all tests..."\n\n
 
 # Example test:
 
-test "PINA: 0x80 => PORTB: 0x08"
+test "PINA: 0x00 => PORTB: 0x00"
 printPORTB
-setPINA 0x80
+setPINA 0x00
 continue 2
+expectPORTB 0x00
+checkResult
+
+test "PINA: 0x03 => PORTB: 0"
+setPINA 0x03
+continue 1
+expectPORTB 0x00
+checkResult
+
+test "PINA: 0x04, 00, 03 => PORTB: 1"
+setPINA 0x04
+continue 2
+setPINA 0x00
+continue 1
+setPINA 0x02
+continue 1
 expectPORTB 0x01
 checkResult
 
-test "PINA: 0x00 => PORTB: 0"
-#set state = s0
-setPINA 0x80
-continue 2
-setPINA 0x04
+test "PINA: 0x08 => PORTB: 1"
+setPINA 0x08
 continue 1
-expectPORTB 0x01
+expectPORTB 0x00
 checkResult
 
 

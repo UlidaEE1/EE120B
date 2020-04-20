@@ -28,30 +28,34 @@ break;
 
 case s0:
 if(A == 0x04)
-{ state = s2;}
-else {state = s1;}
+{ state = s1;}
+else {state = s0;}
 break;
 
-case s2:
+case s1:
 if(A == 0x04)
-{ state = s2;}
+{ state = s1;}
 else if(A == 0x00)
 {state = s3;}
 else{ state = s0;}
-{ state = s1;}
 break;
 
-case s3:
+case s2:
 if(A == 0x02)
 { state = s4;}
 else{ state = s0;}
 break;
 
-case s4:
+case s3:
 if(A == 0x00)
-{ state = s4;}
+{ state = s0;}
 else{ state = s0;}
 break;
+
+case s4:
+if ( A == 0x80)
+{ state == s0;}
+
 
 
 
@@ -66,7 +70,7 @@ break;
 switch(state) {
 
 case s0:
-PORTB = 0;
+PORTB = 1;
 break;
 
 case s1:
@@ -78,7 +82,7 @@ PORTB = 1;
 break;
 
 case s3:
-PORTB = 1;
+PORTB = 0;
 break;
 
 case s4:

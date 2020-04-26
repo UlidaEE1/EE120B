@@ -97,6 +97,7 @@ void Tick()
 		break;
 
 		case s1:
+			PORTC = 1;
 		break;
 
 		case s2:

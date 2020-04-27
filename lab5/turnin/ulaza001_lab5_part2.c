@@ -8,142 +8,119 @@
  *	code, is my own original work.
  *    link: https://drive.google.com/open?id=14RYijDy3T0XgaiNpDmyfxJsASNJS5CsM
  */
-#include <avr/io.h>
-#ifdef _SIMULATE_
-#include "simAVRHeader.h"
-#endif
-
- 
-
-enum States{ Start, s0, s1, s2, s3, s4,s5 }state;
+ #include <avr/io.h>
+ #ifdef _SIMULATE_
+ #include "simAVRHeader.h"
+ #endif
 
 
-void Tick()
-{
-
-	unsigned char A0;
-	unsigned char A1;
-
-	
-	
-	A0= ~PINA & 0x01;
-	A1= ~PINA & 0x02;
+ enum States{ Start, s0, s1, s2, s3} state;
 
 
-	
-	switch(state)
-	{
-		case Start:
-		state = s0;
-		break;
+ void Tick()
+ {
+ unsigned char A;
+ A = ~PINA & 0x03;
+ switch(state)
+ {
+ case Start:
+ state = s0;
+ PORTC = 0;
+ break;
 
-		case s0:
-		if(!A0 && !A1 )
-		{ state = s0;}
-		else if ( A0 && !A1 )
-		{ state = s1;}
-		else if( !A0 && A1)
-		{ state = s3;}
-		break;
+ case s0:
+ if (A== 0x00)
+ { state = s0;
+ PORTC = 0x00;}
+ else if(A == 0x01)
+ { state = s1;
+ PORTC = 0x00 ; }
+ else if(A == 0x02 )
+ {state = s2;}
+ else if(A == 0x03)
+ { state = s3;}
+ break;
 
-		case s1:
-		if(A0 && !A1)
-		{ state = s1;}
-		else if(!A0)
-		{state = s2;}
-			if ( A0 && A1)
-			{ state = s0;}
-		
-		break;
+ case s1:
+ if(A == 0x01)
+ { state = s1;}
+ else if(A == 0x02)
+ {state = s2;}
+ else if (A == 0x03)
+ { state = s3;}
+ break;
 
-		case s2:
-		{ state = s5;}
-		break;
+ case s2:
+ if(A == 0x01)
+ { state = s1;}
+ else if(A == 0x02)
+ {state = s2;}
+ else if( A == 0x03)
+ { state = s3;}
+ else if ( A == 0x00)
+ { state = s0;}
+ break;
 
-		case s3:
-		if(A1)
-		{ state = s3;}
-		else if(!A1)
-		{ state = s4;}
-			
-			if ( A0 && A1)
-			{ state = s0;}
-		break;
+ case s3:
+ if(A == 0x01)
+ { state = s1;}
+ else if(A == 0x02)
+ {state = s2;}
+ else if( A == 0x03)
+ { state = s3;}
+ break;
 
-		case s4:
-		{ state = s5;}
-		break;
-			
-		case s5:
-		if ( A0 && A1)
-		{ state = s0;}
-		else if( A0 && !A1)
-		{state = s1;}
-		else if (!A0 && A1)
-		{ state = s3;}
-		break;
-
-		default:
-		state = Start;
-		break;
+ default:
+ state = Start;
+ break;
 
 
 
-	}
+ }// transitions
 
-	switch(state) {
+ switch(state) {
 
-		case s0:
-		PORTC = 0;
-		break;
+ case s0:
+ PORTC = 0;
+ break;
 
-		case s1:
-		break;
+ case s1:
+ if(PORTC < 9)
+ {PORTC = ++PORTC;}
+ break;
 
-		case s2:
-		if (PORTC <9)
-		{
-			PORTC = PORTC + 0x01;
-		}
-		else{ PORTC = PORTC;}
-		break;
+ case s2:
+ if( PORTC > 0)
+ {
+ PORTC = --PORTC ;
+ }
+ break;
 
-		case s3:
-		break;
+ case s3:
+ PORTC = 0x00;
+ break;
 
-		case s4:
-		if ( PORTC > 0)
-		{
-			PORTC = PORTC - 0x01;
-		}
-		else{ PORTC = PORTC;}
-		break;
-
-		case s5:
-		PORTC = PORTC;
-		break;
-
-		default:
-		break;
-	}
+ default:
+ break;
+ }// state actions
 
 
-}
+ }
 
 
 
-int main(void) {
-	
-	DDRA = 0x00;  PORTA = 0xFF;
-	DDRC = 0xFF;  PORTC = 0x00 ;
-	state = Start;
-	
-	while (1) {
+ int main(void) {
+ /* Insert DDR and PORT initializations */
+ DDRA = 0x00;  PORTA = 0xFF;
+ DDRC = 0xFF;  PORTC = 0x00 ;
+ state = Start;
+ PORTC = 0;
+ //unsigned char A0 = PINA;
+ /* Insert your solution below */
+ while (1) {
 
-		Tick();
-	}
-	return 0;
-
-}
-
+ Tick();
+ }
+ return 0;
+ }
 
